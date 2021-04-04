@@ -16,14 +16,15 @@ import java.io.IOException;
 
 public class PublicJFrame extends JFrame {
 
-    BufferedImage parkingIcon;
-//    ImageIcon bgIamge;
-    BufferedImage bgIamge;
+    private BufferedImage parkingIcon;
+    private ImageIcon bgIamge;
+//    BufferedImage bgIamge;
+//    File dir = new File("src/image/菜单背景.jpg");
 
     public void publicView() {
         try {
             parkingIcon = ImageIO.read(new File("src/image/菜单图标.png"));
-            bgIamge = ImageIO.read(new File("src/image/菜单背景.jpg"));
+//            bgIamge = new ImageIcon(dir.toString());
 //            bgIamge = new BackgroundPanel((new ImageIcon("src/image/菜单背景.jpg")).getImage());
         } catch (IOException e) {
             System.out.println("图片获取失败...");
@@ -41,16 +42,41 @@ public class PublicJFrame extends JFrame {
         }
         //窗口布局设置
         this.setLayout(null);
-        JPanel jPanel = new JPanel();
+        JLabel bglabel = new JLabel();
+        JPanel contentPane = new JPanel();
+        getBackgroundPicture(bglabel, contentPane);
+        this.getLayeredPane().add(bglabel, new Integer(Integer.MIN_VALUE));
+
+        /*JLabel jLabel = new JLabel();
+        jLabel.setIcon(bgIamge);
+        jLabel.setBounds(0, 0, bgIamge.getIconWidth(), bgIamge.getIconHeight());
+        JPanel jPanel = new JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon ii = new ImageIcon("src/image/菜单背景.jpg");
+                g.drawImage(ii.getImage(), 0, 0, getWidth(), getHeight(), ii.getImageObserver());
+            }
+        };
         jPanel.setLayout(null);
+        jPanel.setOpaque(false);
 
         //添加背景容器
-//        this.add(bgIamge);
+        this.add(jPanel);*/
 
     }
 
-    public void paint(Graphics g) {
+    /*public void paint(Graphics g) {
         g.drawImage(bgIamge, 0, 0, null);
+    }*/
+
+    public void getBackgroundPicture(JLabel bglabel, JPanel contentPane){
+        File dir = new File("src/image/菜单背景.jpg");
+        ImageIcon background=new ImageIcon(dir.toString());
+
+        bglabel.setIcon(background);//将图片设置到Jlabel中
+
+        bglabel.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());//设图片显示的区域
+        contentPane.setOpaque(false);//设置面板为透明，在gbLabel之上的JPanel都要设置为透明
     }
 
 }
