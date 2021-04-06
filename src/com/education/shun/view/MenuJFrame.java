@@ -21,7 +21,7 @@ import java.io.IOException;
 public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
 
     private JButton btLogin = new JButton("登录");
-    private JButton btRegister = new JButton("注册");
+    private JButton btExplain = new JButton("说明");
     private JButton btQuit = new JButton("退出");
     //        JButton bt_Play = new JButton("开始");
 
@@ -45,9 +45,9 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
         btLogin.setFont(new Font("楷体", Font.PLAIN, 30));
         //bt_Login.setContentAreaFilled(true);    //按钮透明设置失败
         //注册按钮样式
-        btRegister.setBounds(super.getX(), 250, 150,70);
-        btRegister.setBackground(new Color(888888888));
-        btRegister.setFont(new Font("楷体", Font.PLAIN, 30));
+        btExplain.setBounds(super.getX(), 250, 150,70);
+        btExplain.setBackground(new Color(888888888));
+        btExplain.setFont(new Font("楷体", Font.PLAIN, 30));
         //退出按钮样式
         btQuit.setBounds(super.getX(), 400, 150,70);
         btQuit.setBackground(new Color(123123123));
@@ -56,11 +56,11 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
 
         //添加按钮
         super.add(btLogin);
-        super.add(btRegister);
+        super.add(btExplain);
         super.add(btQuit);
         //按钮点击事件
         btLogin.addActionListener(this);
-        btRegister.addActionListener(this);
+        btExplain.addActionListener(this);
         btQuit.addActionListener(this);
 
     }
@@ -73,10 +73,11 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
             this.dispose();
             new LoginJFrame().view();
         }
-        //注册事件
-        if (e.getSource() == btRegister) {
-            this.dispose();
-            new RegisterJFrame().view();
+        //说明事件
+        if (e.getSource() == btExplain) {
+            System.out.println("说明");
+            /*this.dispose();
+            new RegisterJFrame().view();*/
         }
         //退出
         if (e.getSource() == btQuit) {

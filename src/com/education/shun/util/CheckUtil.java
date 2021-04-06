@@ -1,5 +1,8 @@
 package com.education.shun.util;
 
+import com.education.shun.controller.UserController;
+import com.education.shun.entity.User;
+
 import javax.swing.*;
 
 /**
@@ -17,40 +20,50 @@ public class CheckUtil {
      * @param password  密码
      * @param validate  验证码
      */
-    public void isNull(String username, String password, String validate, JFrame jFrame) {
-        if (username.isEmpty()) {// 判断用户名是否为空
-            JOptionPane.showMessageDialog(jFrame, "用户名不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
-            return;
+    public static boolean isNull(String username, String password, String validate) {
+        // 判断用户名是否为空
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "用户名不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
-        if (new String(password).isEmpty()) {// 判断密码是否为空
-            JOptionPane.showMessageDialog(jFrame, "密码不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
-            return;
+        // 判断密码是否为空
+        if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "密码不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
+        // 判断密码是否为空
         if (validate.isEmpty()) {// 判断验证码是否为空
-            JOptionPane.showMessageDialog(jFrame, "验证码不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
-            return;
+            JOptionPane.showMessageDialog(null, "验证码不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
+        return true;
     }
 
     /**
-     * 合理性校验
+     * 登录合法性校验
      * @param username  用户名
      * @param password  密码
-     * @param validate  验证码
+     * @param validate  系统验证码
+     * @param infoCode  键入验证码
      */
-    public void isRational(String username, String password, String validate) {
-        /*if (!DBHelper.exists(username)) {// 如果用户名不存在则进行提示
-            JOptionPane.showMessageDialog(this, "用户名不存在！", "警告信息", JOptionPane.WARNING_MESSAGE);
-            return;
+    public static boolean isRational(String username, String password, String validate, String infoCode) {
+        User user = new UserController().userFind(username);
+        // 如果用户名不存在则进行提示
+        if (user == null || !user.getUserName().equals(username)) {
+            JOptionPane.showMessageDialog(null, "用户名不存在！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
-        if (!DBHelper.check(username, password)) {// 如果密码错误则进行提示
-            JOptionPane.showMessageDialog(this, "密码错误！", "警告信息", JOptionPane.WARNING_MESSAGE);
-            return;
+        // 如果密码错误则进行提示
+        if (!user.getUserPassword().equals(password)) {
+            JOptionPane.showMessageDialog(null, "密码错误！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
-        if (!validate.equals(randomText)) {// 如果校验码不匹配则进行提示
-            JOptionPane.showMessageDialog(this, "验证码错误！", "警告信息", JOptionPane.WARNING_MESSAGE);
-            return;
-        }*/
+        // 如果校验码不匹配则进行提示
+        if (!validate.equalsIgnoreCase(infoCode)) {
+            JOptionPane.showMessageDialog(null, "验证码错误！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
 }

@@ -4,6 +4,7 @@ import com.education.shun.Service.IUserService;
 import com.education.shun.dao.UserMapper;
 import com.education.shun.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,10 +33,25 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean userInsert(String id, String userName, String userPassword, String loginCont, String email) {
+    public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser ,String loginCont) {
         /*Map<String, String> param = new HashMap();
         param.put("id", id);*/
-        return userMapper.userInsert(id, userName, userPassword, loginCont, email);
+        return userMapper.userInsert(id, userName, userPassword, email, saveUser ,loginCont);
     }
 
+    @Override
+    public void setSaveUser(Integer saveUser, String userName) {
+        userMapper.setSaveUser(saveUser, userName);
+    }
+
+    @Override
+    public List getSaveUser() {
+        if (userMapper.getSaveUser() != null) {
+            List list = new ArrayList();
+            list.add(userMapper.getSaveUser().getUserName());
+            list.add(userMapper.getSaveUser().getUserPassword());
+            return list;
+        }
+        return null;
+    }
 }

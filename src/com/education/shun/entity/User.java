@@ -33,13 +33,18 @@ public class User {
     private String userPassword;
 
     /**
-     * 登录次数
-     */
-    private String loginCont;
-
-    /**
      * 邮箱
      */
     private String email;
+
+    /**
+     * 保存密码
+     */
+    private Integer saveUser;
+
+    /**
+     * 登录次数
+     */
+    private String loginCont;
 
 }

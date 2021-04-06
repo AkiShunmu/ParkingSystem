@@ -37,8 +37,8 @@ public class UserMapper {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 return new User(resultSet.getString("id"), resultSet.getString("userName"),
-                        resultSet.getString("userPassword"), resultSet.getString("loginCont"),
-                        resultSet.getString("email"));
+                        resultSet.getString("userPassword"), resultSet.getString("email"),
+                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -64,8 +64,8 @@ public class UserMapper {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = new User(resultSet.getString("id"), resultSet.getString("userName"),
-                        resultSet.getString("userPassword"), resultSet.getString("loginCont"),
-                        resultSet.getString("email"));
+                        resultSet.getString("userPassword"), resultSet.getString("email"),
+                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
                 list.add(user);
             }
         } catch (ClassNotFoundException e) {
@@ -79,19 +79,20 @@ public class UserMapper {
     }
 
     //添加用户
-    public boolean userInsert(String id, String userName, String userPassword, String loginCont, String email) {
+    public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser ,String loginCont) {
         /*Connection connection = null;
         PreparedStatement statement = null;*/
 
         try {
             connection = DBUtil.getConnection();
-            String sql = "INSERT INTO userinfo(id, username, userpassword, logincont, email) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO userinfo(id, username, userpassword, email, saveUser ,logincont) VALUES (?, ?, ?, ?, ? ,?)";
             statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             statement.setString(2, userName);
             statement.setString(3, userPassword);
-            statement.setString(4, loginCont);
-            statement.setString(5, email);
+            statement.setString(4, email);
+            statement.setInt(5, saveUser);
+            statement.setString(6, loginCont);
             int cont = statement.executeUpdate();
             return cont > 0;
         } catch (ClassNotFoundException e) {
@@ -102,6 +103,49 @@ public class UserMapper {
             DBUtil.closeAll(connection, statement);
         }
         return false;
+    }
+
+    /**
+     * 设置是否保存用户
+     * @param saveUser
+     * @param userName
+     */
+    public void setSaveUser(Integer saveUser, String userName) {
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "UPDATE userinfo SET saveuser = ? WHERE username = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, saveUser);
+            statement.setString(2, userName);
+            statement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            DBUtil.closeAll(connection, statement);
+        }
+    }
+
+    public User getSaveUser() {
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "SELECT * FROM userinfo WHERE saveuser = '1'";
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return new User(resultSet.getString("id"), resultSet.getString("userName"),
+                        resultSet.getString("userPassword"), resultSet.getString("email"),
+                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            DBUtil.closeAll(connection, statement);
+        }
+        return null;
     }
 
 }

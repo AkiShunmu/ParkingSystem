@@ -20,28 +20,36 @@ public class UserController {
     public UserServiceImpl userService = new UserServiceImpl();
 
     //查找
-    public void userFind() {
-        User user = userService.userFind("123");
-        System.out.println("user = " + user);
+    public User userFind(String userName) {
+        return userService.userFind(userName);
     }
 
-    public void userFindAll() {
-        List<User> userList = userService.userFindAll();
-        System.out.println("userList = " + userList);
+    public List<User> userFindAll() {
+        return userService.userFindAll();
     }
 
     public void userInsert() {
-        boolean bl = userService.userInsert("1002", "abc", "abc", "2", "118@qq.com");
-        System.out.println("bl = " + bl);
+        /*boolean bl = userService.userInsert("1002", "abc", "abc", "2", "118@qq.com");
+        System.out.println("bl = " + bl);*/
+    }
+
+    public void setSaveUser(Integer saveUser, String userName) {
+        userService.setSaveUser(saveUser, userName);
+    }
+
+    public List getSaveUser() {
+        return userService.getSaveUser();
     }
 
     //单元测试01
     @Test
     public void test01() {
         UserController userController = new UserController();
-//        userController.userFind();
+//        userController.userFind("123");
 //        userController.userFindAll();
-        userController.userInsert();
+//        userController.userInsert();
+        userController.setSaveUser(1, "123");
+        userController.getSaveUser();
     }
 
 }

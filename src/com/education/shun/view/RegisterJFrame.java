@@ -65,7 +65,7 @@ public class RegisterJFrame extends PublicJFrame implements IJFrame,ActionListen
         //按钮样式设置
         btRegister = new JButton("注册");
         btRegister.setBounds(370, 505, 150, 70);
-        btRegister.setFont(new Font("微软雅黑", Font.PLAIN, 25));
+        btRegister.setFont(new Font("微软雅黑", Font.BOLD, 20));
         btReturn = new JButton("返回");
         btReturn.setBounds(super.getX()+400, super.getY()+400, 100, 50);
         btReturn.setBackground(new Color(87487487));
@@ -73,7 +73,6 @@ public class RegisterJFrame extends PublicJFrame implements IJFrame,ActionListen
         //按钮点击事件
         btRegister.addActionListener(this);
         btReturn.addActionListener(this);
-
 
         //添加元素
         super.add(jlUserName);
