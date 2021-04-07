@@ -148,4 +148,28 @@ public class UserMapper {
         return null;
     }
 
+    public List<User> getAllSaveUserAll() {
+        List<User> list = new ArrayList<>();
+
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "SELECT * FROM userinfo WHERE saveuser = '1'";
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User(resultSet.getString("id"), resultSet.getString("userName"),
+                        resultSet.getString("userPassword"), resultSet.getString("email"),
+                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
+                list.add(user);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            DBUtil.closeAll(connection, statement);
+        }
+        return list;
+    }
+
 }

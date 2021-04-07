@@ -25,6 +25,8 @@ public interface IUserService {
 
     List getSaveUser();
 
+    List<User> getAllSaveUser();
+
 //    boolean userDelete();
 
 }

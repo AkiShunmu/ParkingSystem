@@ -22,17 +22,17 @@ public class CheckUtil {
      */
     public static boolean isNull(String username, String password, String validate) {
         // 判断用户名是否为空
-        if (username.isEmpty()) {
+        if (username.isEmpty() || username.equals("请输入用户名")) {
             JOptionPane.showMessageDialog(null, "用户名不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         // 判断密码是否为空
-        if (password.isEmpty()) {
+        if (password.isEmpty() || password.equals("请输入密码")) {
             JOptionPane.showMessageDialog(null, "密码不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
             return false;
         }
-        // 判断密码是否为空
-        if (validate.isEmpty()) {// 判断验证码是否为空
+        // 判断验证码是否为空
+        if (validate.isEmpty() || validate.equals("请输入验证码")) {
             JOptionPane.showMessageDialog(null, "验证码不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
             return false;
         }

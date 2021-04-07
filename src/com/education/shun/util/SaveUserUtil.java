@@ -22,6 +22,10 @@ public class SaveUserUtil {
         return userController.getSaveUser();
     }
 
+    public static List<User> getAllSaveUser() {
+        return userController.getAllSaveUser();
+    }
+
     public static void onSaveUser(String userName) {
         userController.setSaveUser(ON_SAVE, userName);
     }

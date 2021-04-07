@@ -1,6 +1,7 @@
 package com.education.shun.view;
 
 import com.education.shun.Interface.IJFrame;
+import com.education.shun.entity.User;
 import com.education.shun.util.CaptchaCodeUtil;
 import com.education.shun.util.CheckUtil;
 import com.education.shun.util.SaveUserUtil;
@@ -10,14 +11,12 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @program: ParkingSystem
@@ -43,7 +42,6 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
     @Override
     public void view() {
 
-        isCheckBox();
         super.publicView();
 
         //字体样式设置
@@ -59,6 +57,22 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         jlCodeText.setFont(new Font("宋体", Font.BOLD, 25));
         jlCodeText.setForeground(Color.red);
         jlCodeText.setBounds(150, 300, 100, 50);
+        /*String[] item = {"aaa","bbb","ccc","ddd"};
+        JComboBox jComboBox = new JComboBox(item);
+        jComboBox.setFont(new Font("宋体", Font.BOLD, 25));
+        jComboBox.setForeground(Color.red);
+        jComboBox.setBounds(150, 500, 100, 50);
+        jComboBox.addItemListener(new ItemListener(){
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED)//需要加上这句，因为Change有DESELECTED和SELECTED两种情况
+                    System.out.println((String)e.getItem());
+
+            }
+
+        });
+        super.add(jComboBox);*/
 
         //输入框样式设置
         jtUserName = new JTextField(10);
@@ -72,16 +86,15 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         jtUserName.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-
                 //当点击输入框时，里面的内容为提示信息时，清空内容，将其字体颜色设置为正常黑色。
                 if(jtUserName.getText().equals("请输入用户名")){
                     jtUserName.setText("");
                     jtUserName.setForeground(Color.BLACK);
+                    //添加保存密码的用户
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
-
                 //当失去焦点时，判断是否为空，若为空时，直接显示提示信息，设置颜色
                 if(jtUserName.getText().length()<1){
                     jtUserName.setText("请输入用户名");
@@ -100,7 +113,6 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         jtCode.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-
                 //当点击输入框时，里面的内容为提示信息时，清空内容，将其字体颜色设置为正常黑色。
                 if(jtCode.getText().equals("请输入验证码")){
                     jtCode.setText("");
@@ -109,7 +121,6 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
             }
             @Override
             public void focusLost(FocusEvent e) {
-
                 //当失去焦点时，判断是否为空，若为空时，直接显示提示信息，设置颜色
                 if(jtCode.getText().length()<1){
                     jtCode.setText("请输入验证码");
@@ -170,6 +181,7 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         btRegister.addActionListener(this);
         btCode.addActionListener(this);
         btReturn.addActionListener(this);
+        onCheckBox();
 
         //验证码
         bfCode = codeUtil.getImage();
@@ -184,9 +196,12 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         strCode = codeUtil.getText();
 
         //复选按钮
-        jcPassword = new JCheckBox("保存账号", true);
+        jcPassword = new JCheckBox("保存账号", false);
         jcPassword.setFont(new Font("楷体", Font.BOLD, 15));
         jcPassword.setBounds(270, 370, 100,20);
+        if (!jcPassword.isSelected()) {
+            offCheckBox();
+        }
         //获取复选框状态
         jcPassword.addChangeListener(new ChangeListener() {
             @Override
@@ -194,9 +209,10 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
                 // 获取事件源（即复选框本身）
                 JCheckBox checkBox = (JCheckBox) e.getSource();
                 if (checkBox.isSelected() == true) {
-                    System.out.println("被选中");
+                    //保证只保存一个用户
+                    onCheckBox();
                 } else {
-                    System.out.println("未被选中");
+                    offCheckBox();
                 }
             }
         });
@@ -246,22 +262,35 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
             strCode = codeUtil.getText();
         }
         if (e.getSource() == btReturn) {
+            offCheckBox();
             this.dispose();
             new MenuJFrame().view();
         }
     }
 
-    public void isCheckBox() {
-        System.out.println("111");
+    //选中保存密码
+    public void onCheckBox() {
+        SaveUserUtil.onSaveUser(jtUserName.getText());
         if (SaveUserUtil.getSaveUser() != null) {
-            List list = (List) SaveUserUtil.getSaveUser();
-            System.out.println(list.getItem(0));
-            System.out.println(list.getItem(1));
-//            jtUserName.setText(list.getItem(0));
-//            jpPassword.setText(list.getItem(1));
+            if (SaveUserUtil.getAllSaveUser().size() > 1) {
+                List<User> list = SaveUserUtil.getAllSaveUser();
+                for (User user : list) {
+                    if (!user.getUserName().equals(jtUserName.getText())) {
+                        SaveUserUtil.offSaveUser(user.getUserName());
+                    }
+                }
+            }
+            jtUserName.setForeground(Color.black);
+            jpPassword.setForeground(Color.black);
+            jpPassword.setEchoChar('*');
+            jtUserName.setText(SaveUserUtil.getSaveUser().get(0).toString());
+            jpPassword.setText(SaveUserUtil.getSaveUser().get(1).toString());
         }
+    }
 
-
+    //非选中不保存密码
+    public void offCheckBox() {
+        SaveUserUtil.offSaveUser(jtUserName.getText());
     }
 
 }

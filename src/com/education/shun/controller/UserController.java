@@ -41,6 +41,10 @@ public class UserController {
         return userService.getSaveUser();
     }
 
+    public List<User> getAllSaveUser() {
+        return userService.getAllSaveUser();
+    }
+
     //单元测试01
     @Test
     public void test01() {
@@ -48,8 +52,10 @@ public class UserController {
 //        userController.userFind("123");
 //        userController.userFindAll();
 //        userController.userInsert();
-        userController.setSaveUser(1, "123");
-        userController.getSaveUser();
+        userController.setSaveUser(0, "123");
+        userController.setSaveUser(0, "abc");
+//        userController.getSaveUser();
+//        System.out.println(userController.getAllSaveUser());
     }
 
 }
