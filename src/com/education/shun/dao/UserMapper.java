@@ -38,7 +38,7 @@ public class UserMapper {
             while (resultSet.next()) {
                 return new User(resultSet.getString("id"), resultSet.getString("userName"),
                         resultSet.getString("userPassword"), resultSet.getString("email"),
-                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
+                        resultSet.getInt("saveUser"));
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class UserMapper {
             while (resultSet.next()) {
                 User user = new User(resultSet.getString("id"), resultSet.getString("userName"),
                         resultSet.getString("userPassword"), resultSet.getString("email"),
-                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
+                        resultSet.getInt("saveUser"));
                 list.add(user);
             }
         } catch (ClassNotFoundException e) {
@@ -79,20 +79,19 @@ public class UserMapper {
     }
 
     //添加用户
-    public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser ,String loginCont) {
+    public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser) {
         /*Connection connection = null;
         PreparedStatement statement = null;*/
 
         try {
             connection = DBUtil.getConnection();
-            String sql = "INSERT INTO userinfo(id, username, userpassword, email, saveUser ,logincont) VALUES (?, ?, ?, ?, ? ,?)";
+            String sql = "INSERT INTO userinfo(id, username, userpassword, email, saveUser) VALUES (?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             statement.setString(2, userName);
             statement.setString(3, userPassword);
             statement.setString(4, email);
             statement.setInt(5, saveUser);
-            statement.setString(6, loginCont);
             int cont = statement.executeUpdate();
             return cont > 0;
         } catch (ClassNotFoundException e) {
@@ -136,7 +135,7 @@ public class UserMapper {
             while (resultSet.next()) {
                 return new User(resultSet.getString("id"), resultSet.getString("userName"),
                         resultSet.getString("userPassword"), resultSet.getString("email"),
-                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
+                        resultSet.getInt("saveUser"));
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -159,7 +158,7 @@ public class UserMapper {
             while (resultSet.next()) {
                 User user = new User(resultSet.getString("id"), resultSet.getString("userName"),
                         resultSet.getString("userPassword"), resultSet.getString("email"),
-                        resultSet.getInt("saveUser"), resultSet.getString("loginCont"));
+                        resultSet.getInt("saveUser"));
                 list.add(user);
             }
         } catch (ClassNotFoundException e) {

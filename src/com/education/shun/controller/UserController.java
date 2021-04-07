@@ -28,9 +28,8 @@ public class UserController {
         return userService.userFindAll();
     }
 
-    public void userInsert() {
-        /*boolean bl = userService.userInsert("1002", "abc", "abc", "2", "118@qq.com");
-        System.out.println("bl = " + bl);*/
+    public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser) {
+        return userService.userInsert(id, userName, userPassword, email, saveUser);
     }
 
     public void setSaveUser(Integer saveUser, String userName) {

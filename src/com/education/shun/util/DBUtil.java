@@ -52,34 +52,4 @@ public class DBUtil {
         }
     }
 
-    public static void  main(String[] args){
-        //数据库地址
-        String url = "jdbc:mysql://localhost:3306/shunsql?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC";
-        //用户名密码
-        String user = "root";
-        String password = "root";
-        Connection conn = null;
-        try{
-            conn=DriverManager.getConnection(url, user, password);
-            String sql="select * from t_user;";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
-            while (rs.next()){
-                System.out.println(rs.getString("nickname"));
-            }
-            rs.close();
-            ps.close();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }finally{
-            if(conn!=null){
-                try {
-                    conn.close();
-                }catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 }

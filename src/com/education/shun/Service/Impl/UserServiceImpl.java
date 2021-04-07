@@ -33,10 +33,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser ,String loginCont) {
+    public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser) {
         /*Map<String, String> param = new HashMap();
         param.put("id", id);*/
-        return userMapper.userInsert(id, userName, userPassword, email, saveUser ,loginCont);
+        return userMapper.userInsert(id, userName, userPassword, email, saveUser);
     }
 
     @Override

@@ -57,47 +57,30 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         jlCodeText.setFont(new Font("宋体", Font.BOLD, 25));
         jlCodeText.setForeground(Color.red);
         jlCodeText.setBounds(150, 300, 100, 50);
-        /*String[] item = {"aaa","bbb","ccc","ddd"};
-        JComboBox jComboBox = new JComboBox(item);
-        jComboBox.setFont(new Font("宋体", Font.BOLD, 25));
-        jComboBox.setForeground(Color.red);
-        jComboBox.setBounds(150, 500, 100, 50);
-        jComboBox.addItemListener(new ItemListener(){
-
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED)//需要加上这句，因为Change有DESELECTED和SELECTED两种情况
-                    System.out.println((String)e.getItem());
-
-            }
-
-        });
-        super.add(jComboBox);*/
 
         //输入框样式设置
         jtUserName = new JTextField(10);
         jtUserName.setBounds(270, 105, 200, 40);
         jtUserName.setFont(new Font("宋体", Font.BOLD, 20));
         jtUserName.setColumns(15);
-        jtUserName.setToolTipText("----请输入16位数的用户名");
-        jtUserName.setText("请输入用户名");
+        jtUserName.setToolTipText("----请输入用户名(账号)");
+        jtUserName.setText("  请输入用户名");
         jtUserName.setForeground(new Color(204,204,204));
         //设置焦点监听
         jtUserName.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
                 //当点击输入框时，里面的内容为提示信息时，清空内容，将其字体颜色设置为正常黑色。
-                if(jtUserName.getText().equals("请输入用户名")){
+                if(jtUserName.getText().equals("  请输入用户名")){
                     jtUserName.setText("");
                     jtUserName.setForeground(Color.BLACK);
-                    //添加保存密码的用户
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 //当失去焦点时，判断是否为空，若为空时，直接显示提示信息，设置颜色
                 if(jtUserName.getText().length()<1){
-                    jtUserName.setText("请输入用户名");
+                    jtUserName.setText("  请输入用户名");
                     jtUserName.setForeground(new Color(204,204,204));
                 }
             }
@@ -107,14 +90,14 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         jtCode.setFont(new Font("宋体", Font.BOLD, 20));
         jtCode.setColumns(15);
         jtCode.setToolTipText("----请输入4位数的验证码");
-        jtCode.setText("请输入验证码");
+        jtCode.setText("  请输入验证码");
         jtCode.setForeground(new Color(204,204,204));
         //设置焦点监听
         jtCode.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
                 //当点击输入框时，里面的内容为提示信息时，清空内容，将其字体颜色设置为正常黑色。
-                if(jtCode.getText().equals("请输入验证码")){
+                if(jtCode.getText().equals("  请输入验证码")){
                     jtCode.setText("");
                     jtCode.setForeground(Color.BLACK);
                 }
@@ -123,7 +106,7 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
             public void focusLost(FocusEvent e) {
                 //当失去焦点时，判断是否为空，若为空时，直接显示提示信息，设置颜色
                 if(jtCode.getText().length()<1){
-                    jtCode.setText("请输入验证码");
+                    jtCode.setText("  请输入验证码");
                     jtCode.setForeground(new Color(204,204,204));
                 }
             }
@@ -133,15 +116,15 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         jpPassword.setFont(new Font("宋体", Font.BOLD, 20));
         jpPassword.setColumns(15);
         jpPassword.setEchoChar('\0');
-        jpPassword.setText("请输入密码");
+        jpPassword.setText("  请输入密码");
         jpPassword.setForeground(new Color(204,204,204));
-        jpPassword.setToolTipText("----请输入16位数的密码");
+        jpPassword.setToolTipText("----请输入用户密码");
         //设置焦点监听
         jpPassword.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
                 //当点击输入框时，里面的内容为提示信息时，清空内容，将其字体颜色设置为正常黑色。
-                if(jpPassword.getText().equals("请输入密码")){
+                if(jpPassword.getText().equals("  请输入密码")){
                     jpPassword.setText("");
                     jpPassword.setForeground(Color.BLACK);
                     jpPassword.setEchoChar('*');
@@ -151,7 +134,7 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
             public void focusLost(FocusEvent e) {
                 //当失去焦点时，判断是否为空，若为空时，直接显示提示信息，设置颜色
                 if(jpPassword.getText().length()<1){
-                    jpPassword.setText("请输入密码");
+                    jpPassword.setText("  请输入密码");
                     jpPassword.setForeground(new Color(204,204,204));
                     jpPassword.setEchoChar('\0');
                 }
@@ -236,13 +219,10 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btLogin) {
-            //非空校验
-            if (CheckUtil.isNull(jtUserName.getText(), jpPassword.getText(), jtCode.getText())) {
-                //合法性校验
-                if (CheckUtil.isRational(jtUserName.getText(), jpPassword.getText(), strCode, jtCode.getText())) {
-                    this.dispose();
-                    new PlayJFrame().view();
-                }
+            //合法性校验
+            if (CheckUtil.isLoginRational(jtUserName.getText(), jpPassword.getText(), strCode, jtCode.getText())) {
+                this.dispose();
+                new PlayJFrame().view();
             }
         }
         if (e.getSource() == btRegister) {

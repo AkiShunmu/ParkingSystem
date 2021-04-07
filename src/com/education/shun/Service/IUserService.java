@@ -19,7 +19,7 @@ public interface IUserService {
 
     List<User> userFindAll();
 
-    boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser ,String loginCont);
+    boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser);
 
     void setSaveUser(Integer saveUser, String userName);
 

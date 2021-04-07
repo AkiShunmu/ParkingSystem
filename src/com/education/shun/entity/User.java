@@ -42,9 +42,4 @@ public class User {
      */
     private Integer saveUser;
 
-    /**
-     * 登录次数
-     */
-    private String loginCont;
-
 }
