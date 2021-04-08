@@ -27,12 +27,11 @@ import java.util.List;
 
 public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener {
 
-    private JLabel jlUserName,jlPassword,jlCodeText,jlCode;
+    private JLabel jlLogin,jlUserName,jlPassword,jlCodeText,jlCode;
     private JTextField jtUserName,jtCode;
     private JPasswordField jpPassword;
-    private JButton btLogin,btRegister,btCode;
+    private JButton btReturn,btLogin,btRegister,btCode;
     private JCheckBox jcPassword;
-    private JButton btReturn;
 
     private CaptchaCodeUtil codeUtil = new CaptchaCodeUtil();
     private BufferedImage bfCode;
@@ -45,17 +44,21 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         super.publicView();
 
         //字体样式设置
+        jlLogin = new JLabel("登录");
+        jlLogin.setFont(new Font("楷体", Font.BOLD, 50));
+        jlLogin.setForeground(Color.yellow);
+        jlLogin.setBounds(10, 1, 200, 70);
         jlUserName = new JLabel("用户名:");
         jlUserName.setFont(new Font("宋体", Font.BOLD, 25));
-        jlUserName.setForeground(Color.red);
+        jlUserName.setForeground(Color.cyan);
         jlUserName.setBounds(150, 100, 100, 50);
         jlPassword = new JLabel("密码:");
         jlPassword.setFont(new Font("宋体", Font.BOLD, 25));
-        jlPassword.setForeground(Color.red);
+        jlPassword.setForeground(Color.cyan);
         jlPassword.setBounds(150, 200, 100, 50);
         jlCodeText = new JLabel("验证码:");
         jlCodeText.setFont(new Font("宋体", Font.BOLD, 25));
-        jlCodeText.setForeground(Color.red);
+        jlCodeText.setForeground(Color.cyan);
         jlCodeText.setBounds(150, 300, 100, 50);
 
         //输入框样式设置
@@ -145,11 +148,11 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         btLogin = new JButton("登录");
         btLogin.setFont(new Font("微软雅黑", Font.BOLD, 20));
         btLogin.setForeground(Color.black);
-        btLogin.setBounds(270, 405, 120, 50);
+        btLogin.setBounds(270, 425, 120, 50);
         btRegister = new JButton("注册");
         btRegister.setFont(new Font("微软雅黑", Font.BOLD, 20));
         btRegister.setForeground(Color.black);
-        btRegister.setBounds(470, 405, 120, 50);
+        btRegister.setBounds(470, 425, 120, 50);
         btCode = new JButton("更换");
         btCode.setFont(new Font("楷体", Font.BOLD, 15));
         btCode.setForeground(Color.blue);
@@ -157,7 +160,7 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         //返回按钮
         btReturn = new JButton("返回");
         btReturn.setBounds(super.getX()+400, super.getY()+400, 100, 50);
-        btReturn.setBackground(new Color(87487487));
+        btReturn.setBackground(Color.orange);
         btReturn.setFont(new Font("楷体", Font.PLAIN, 20));
         //按钮点击事件
         btLogin.addActionListener(this);
@@ -201,18 +204,14 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         });
 
         //添加元素
-        super.add(jlUserName);
-        super.add(jlPassword);
-        super.add(jlCodeText);
-        super.add(jlCode);
-        super.add(jtUserName);
-        super.add(jpPassword);
-        super.add(jtCode);
-        super.add(btLogin);
-        super.add(btRegister);
-        super.add(btCode);
-        super.add(btReturn);
-        super.add(jcPassword);
+        super.addElement(jlLogin, jlUserName, jlPassword, jlCodeText,
+                jlCode, jtUserName, jpPassword, jtCode, btLogin, btRegister,
+                btCode, btReturn, jcPassword);
+
+        //将元素置于最上层
+        super.upLayeredPane(jlLogin, jlUserName, jlPassword, jlCodeText,
+                jlCode, jtUserName, jpPassword, jtCode, btLogin, btRegister,
+                btCode, btReturn, jcPassword);
 
     }
 

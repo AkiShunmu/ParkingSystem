@@ -23,21 +23,11 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
     private JButton btLogin = new JButton("登录");
     private JButton btExplain = new JButton("说明");
     private JButton btQuit = new JButton("退出");
-    //        JButton bt_Play = new JButton("开始");
 
     @Override
     public void view() {
 
-        JPanel jpBgImage = new JPanel();
-        JPanel jpButton = new JPanel();
-        JPanel jpLogin = new JPanel();
-
         super.publicView();
-
-        //按钮容器格式
-        /*jp_Button.setSize(150,720);
-        jp_Button.setLayout(new GridLayout(3,1,20,20));
-        jp_Button.setLayout(null);*/
 
         //登录按钮样式
         btLogin.setBounds(super.getX(), 100, 150,70);
@@ -53,15 +43,18 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
         btQuit.setBackground(new Color(123123123));
         btQuit.setFont(new Font("楷体", Font.PLAIN, 30));
 
-
         //添加按钮
-        super.add(btLogin);
-        super.add(btExplain);
-        super.add(btQuit);
+        super.addElement(btLogin, btExplain, btQuit);
+
         //按钮点击事件
         btLogin.addActionListener(this);
         btExplain.addActionListener(this);
         btQuit.addActionListener(this);
+
+        //将元素置于最上层
+        super.upLayeredPane(btLogin, btExplain, btQuit);
+        //再次调用父类方法刷新背景
+        super.publicView();
 
     }
 

@@ -30,7 +30,7 @@ public class PlayJFrame extends PublicJFrame implements IJFrame, ActionListener 
 
         btReturn = new JButton("返回");
         btReturn.setBounds(super.getX()+400, super.getY()+400, 100, 50);
-        btReturn.setBackground(new Color(87487487));
+        btReturn.setBackground(Color.orange);
         btReturn.setFont(new Font("楷体", Font.PLAIN, 20));
         //按钮点击事件
         btReturn.addActionListener(this);

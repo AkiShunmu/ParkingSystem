@@ -118,6 +118,33 @@ public class CheckUtil {
         return true;
     }
 
+    /**
+     * 验证码校验
+     * @param validate  系统验证码
+     * @param infoCode  键入验证码
+     * @return
+     */
+    public static boolean isCode(String validate, String infoCode) {
+        // 判断验证码是否为空
+        if (infoCode.isEmpty() || infoCode.equals("  请输入验证码")) {
+            JOptionPane.showMessageDialog(null, "验证码不能为空！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        // 如果校验码不匹配则进行提示
+        if (!validate.equalsIgnoreCase(infoCode)) {
+            JOptionPane.showMessageDialog(null, "验证码错误！", "警告信息", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 注册事件
+     * @param userName
+     * @param password
+     * @param email
+     * @return
+     */
     public static boolean isRegisterSuccess(String userName, String password, String email) {
         //数据库添加用户
         UserController userController = new UserController();
