@@ -1,15 +1,12 @@
 package com.education.shun.view;
 
-import com.education.shun.Interface.IJFrame;
+import com.education.shun.Interface.CaseJFrameMole;
+import com.education.shun.view.parent.StartJFrame;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @program: ParkingSystem
@@ -18,7 +15,7 @@ import java.io.IOException;
  * @create: 2021-03-31 16:37
  **/
 
-public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
+public class MenuJFrame extends StartJFrame implements CaseJFrameMole,ActionListener {
 
     private JButton btLogin = new JButton("登录");
     private JButton btExplain = new JButton("说明");
@@ -27,7 +24,7 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
     @Override
     public void view() {
 
-        super.publicView();
+        super.view();
 
         //登录按钮样式
         btLogin.setBounds(super.getX(), 100, 150,70);
@@ -54,7 +51,7 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
         //将元素置于最上层
         super.upLayeredPane(btLogin, btExplain, btQuit);
         //再次调用父类方法刷新背景
-        super.publicView();
+        super.view();
 
     }
 
@@ -69,6 +66,8 @@ public class MenuJFrame extends PublicJFrame implements IJFrame,ActionListener {
         //说明事件
         if (e.getSource() == btExplain) {
             System.out.println("说明");
+            this.dispose();
+            new FunctionJFrame().view();
             /*this.dispose();
             new RegisterJFrame().view();*/
         }

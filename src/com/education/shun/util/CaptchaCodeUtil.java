@@ -27,9 +27,9 @@ public class CaptchaCodeUtil {
     private String text;
 
     private Color randomColor() {
-        int red = random.nextInt(150);
-        int green = random.nextInt(150);
-        int blue = random.nextInt(150);
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
         return new Color(red,green,blue);
     }
 

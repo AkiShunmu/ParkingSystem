@@ -1,6 +1,11 @@
-package com.education.shun.view;
+package com.education.shun.view.parent;
 
-import com.education.shun.util.ImageUtil;
+import com.education.shun.Interface.CaseJFrameMole;
+import com.education.shun.Interface.JFrameMold;
+import com.education.shun.util.GameUtil;
+import com.education.shun.view.LoginJFrame;
+import com.education.shun.view.MenuJFrame;
+import com.education.shun.view.RegisterJFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,30 +16,25 @@ import java.io.IOException;
 
 /**
  * @program: ParkingSystem
- * @description: 窗口公共方法
+ * @description: 主界面父类
  * @author: qishun zhou
  * @create: 2021-03-31 23:10
  **/
 
-public class PublicJFrame extends JFrame {
+public class StartJFrame extends JFrame implements JFrameMold {
 
     //创建一个容器
     private Container container;
     //创建背景面板。
-    private ImageUtil bgPanel;
+    private GameUtil bgPanel;
     //创建图片对象
     private ImageIcon image;
 
     private BufferedImage parkingIcon;
-//    private ImageIcon bgIamge;
-//    BufferedImage bgIamge;
-//    File dir = new File("src/image/菜单背景.jpg");
 
-    public void publicView() {
+    public void view() {
         try {
             parkingIcon = ImageIO.read(new File("src/image/菜单图标.png"));
-//            bgIamge = new ImageIcon(dir.toString());
-//            bgIamge = new BackgroundPanel((new ImageIcon("src/image/菜单背景.jpg")).getImage());
         } catch (IOException e) {
             System.out.println("图片获取失败...");
             e.printStackTrace();
@@ -53,26 +53,22 @@ public class PublicJFrame extends JFrame {
         this.setLayout(null);       //不采取任何布局
         image = new ImageIcon("src/image/菜单背景.jpg");
         container = this.getContentPane();
-        bgPanel = new ImageUtil(image.getImage());
+        bgPanel = new GameUtil(image.getImage());
         bgPanel.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
         container.add(bgPanel);
+    }
 
-        /*JLabel jLabel = new JLabel();
-        jLabel.setIcon(bgIamge);
-        jLabel.setBounds(0, 0, bgIamge.getIconWidth(), bgIamge.getIconHeight());
-        JPanel jPanel = new JPanel() {
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon ii = new ImageIcon("src/image/菜单背景.jpg");
-                g.drawImage(ii.getImage(), 0, 0, getWidth(), getHeight(), ii.getImageObserver());
-            }
-        };
-        jPanel.setLayout(null);
-        jPanel.setOpaque(false);
-
-        //添加背景容器
-        this.add(jPanel);*/
-
+    public CaseJFrameMole publicView(CaseJFrameMole param) {
+        if (param.getClass().getName().equals("MenuJFrame")) {
+            return new MenuJFrame();
+        }
+        if (param.getClass().getName().equals("LoginJFrame")) {
+            return new LoginJFrame();
+        }
+        if (param.getClass().getName().equals("RegisterJFrame")) {
+            return new RegisterJFrame();
+        }
+        return null;
     }
 
     public void addElement(Component... param) {

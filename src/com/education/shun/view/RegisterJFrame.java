@@ -1,9 +1,10 @@
 package com.education.shun.view;
 
-import com.education.shun.Interface.IJFrame;
-import com.education.shun.controller.UserController;
+import com.education.shun.Interface.CaseJFrameMole;
 import com.education.shun.util.CaptchaCodeUtil;
 import com.education.shun.util.CheckUtil;
+import com.education.shun.util.ColourUtil;
+import com.education.shun.view.parent.StartJFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,9 +25,10 @@ import java.io.IOException;
  * @create: 2021-03-31 22:46
  **/
 
-public class RegisterJFrame extends PublicJFrame implements IJFrame,ActionListener {
+public class RegisterJFrame extends StartJFrame implements CaseJFrameMole,ActionListener {
 
-    private JLabel jlRegister,jlUserName,jlPassword,jlIsPassword,jlEmail,jlCodeText,jlCode;
+    private JPanel jpRegister;
+    private JLabel jlUserName,jlPassword,jlIsPassword,jlEmail,jlCodeText,jlCode;
     private JTextField jtUserName,jtEmail,jtCode;
     private JPasswordField jpPassword,jpIsPassword;
     private JButton btReturn,btRegister,btCode;
@@ -39,13 +41,11 @@ public class RegisterJFrame extends PublicJFrame implements IJFrame,ActionListen
     @Override
     public void view() {
 
-        super.publicView();
+        super.view();
 
         //字体样式设置
-        jlRegister = new JLabel("注册");
-        jlRegister.setFont(new Font("楷体", Font.BOLD, 50));
-        jlRegister.setForeground(Color.yellow);
-        jlRegister.setBounds(10, 1, 200, 70);
+        jpRegister = new ColourUtil("注册");
+        jpRegister.setBounds(10, 1, 200, 70);
         jlUserName = new JLabel("用户名:");
         jlUserName.setFont(new Font("宋体", Font.BOLD, 25));
         jlUserName.setForeground(Color.cyan);
@@ -211,7 +211,7 @@ public class RegisterJFrame extends PublicJFrame implements IJFrame,ActionListen
         btRegister.setFont(new Font("微软雅黑", Font.BOLD, 20));
         btReturn = new JButton("返回");
         btReturn.setBounds(super.getX()+400, super.getY()+400, 100, 50);
-        btReturn.setBackground(Color.orange);
+        btReturn.setBackground(new Color(192, 192, 192));
         btReturn.setFont(new Font("楷体", Font.PLAIN, 20));
         btCode = new JButton("更换");
         btCode.setFont(new Font("楷体", Font.BOLD, 15));
@@ -235,12 +235,12 @@ public class RegisterJFrame extends PublicJFrame implements IJFrame,ActionListen
         strCode = codeUtil.getText();
 
         //添加元素
-        super.addElement(jlRegister, jlUserName, jlPassword, jlIsPassword, jlEmail,
+        super.addElement(jpRegister, jlUserName, jlPassword, jlIsPassword, jlEmail,
                 jlCodeText, jlCode, jtUserName, jpPassword, jpIsPassword, jtEmail,
                 jtCode, btRegister, btReturn, btCode);
 
         //将元素置于最上层
-        super.upLayeredPane(jlRegister, jlUserName, jlPassword, jlIsPassword, jlEmail,
+        super.upLayeredPane(jpRegister, jlUserName, jlPassword, jlIsPassword, jlEmail,
                 jlCodeText, jlCode, jtUserName, jpPassword, jpIsPassword, jtEmail,
                 jtCode, btRegister, btReturn, btCode);
 

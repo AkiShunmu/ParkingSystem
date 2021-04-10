@@ -1,10 +1,12 @@
 package com.education.shun.view;
 
-import com.education.shun.Interface.IJFrame;
+import com.education.shun.Interface.CaseJFrameMole;
 import com.education.shun.entity.User;
 import com.education.shun.util.CaptchaCodeUtil;
 import com.education.shun.util.CheckUtil;
+import com.education.shun.util.ColourUtil;
 import com.education.shun.util.SaveUserUtil;
+import com.education.shun.view.parent.StartJFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,9 +27,10 @@ import java.util.List;
  * @create: 2021-03-31 21:56
  **/
 
-public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener {
+public class LoginJFrame extends StartJFrame implements CaseJFrameMole,ActionListener {
 
-    private JLabel jlLogin,jlUserName,jlPassword,jlCodeText,jlCode;
+    private JPanel jpLogin;
+    private JLabel jlUserName,jlPassword,jlCodeText,jlCode,jlRTips;
     private JTextField jtUserName,jtCode;
     private JPasswordField jpPassword;
     private JButton btReturn,btLogin,btRegister,btCode;
@@ -41,13 +44,11 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
     @Override
     public void view() {
 
-        super.publicView();
+        super.view();
 
         //字体样式设置
-        jlLogin = new JLabel("登录");
-        jlLogin.setFont(new Font("楷体", Font.BOLD, 50));
-        jlLogin.setForeground(Color.yellow);
-        jlLogin.setBounds(10, 1, 200, 70);
+        jpLogin = new ColourUtil("登录");
+        jpLogin.setBounds(10, 1, 200, 70);
         jlUserName = new JLabel("用户名:");
         jlUserName.setFont(new Font("宋体", Font.BOLD, 25));
         jlUserName.setForeground(Color.cyan);
@@ -60,6 +61,10 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         jlCodeText.setFont(new Font("宋体", Font.BOLD, 25));
         jlCodeText.setForeground(Color.cyan);
         jlCodeText.setBounds(150, 300, 100, 50);
+        jlRTips = new JLabel("若没有账号，请点击注册...");
+        jlRTips.setFont(new Font("宋体", Font.BOLD, 15));
+        jlRTips.setForeground(Color.red);
+        jlRTips.setBounds(470, 480, 250, 20);
 
         //输入框样式设置
         jtUserName = new JTextField(10);
@@ -145,7 +150,7 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         });
 
         //按钮样式设置
-        btLogin = new JButton("登录");
+        btLogin = new JButton("开始");
         btLogin.setFont(new Font("微软雅黑", Font.BOLD, 20));
         btLogin.setForeground(Color.black);
         btLogin.setBounds(270, 425, 120, 50);
@@ -160,7 +165,7 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         //返回按钮
         btReturn = new JButton("返回");
         btReturn.setBounds(super.getX()+400, super.getY()+400, 100, 50);
-        btReturn.setBackground(Color.orange);
+        btReturn.setBackground(new Color(192, 192, 192));
         btReturn.setFont(new Font("楷体", Font.PLAIN, 20));
         //按钮点击事件
         btLogin.addActionListener(this);
@@ -204,13 +209,13 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
         });
 
         //添加元素
-        super.addElement(jlLogin, jlUserName, jlPassword, jlCodeText,
-                jlCode, jtUserName, jpPassword, jtCode, btLogin, btRegister,
+        super.addElement(jpLogin, jlUserName, jlPassword, jlCodeText, jlCode,
+                jlRTips, jtUserName, jpPassword, jtCode, btLogin, btRegister,
                 btCode, btReturn, jcPassword);
 
         //将元素置于最上层
-        super.upLayeredPane(jlLogin, jlUserName, jlPassword, jlCodeText,
-                jlCode, jtUserName, jpPassword, jtCode, btLogin, btRegister,
+        super.upLayeredPane(jpLogin, jlUserName, jlPassword, jlCodeText, jlCode,
+                jlRTips, jtUserName, jpPassword, jtCode, btLogin, btRegister,
                 btCode, btReturn, jcPassword);
 
     }
@@ -221,7 +226,7 @@ public class LoginJFrame extends PublicJFrame implements IJFrame,ActionListener 
             //合法性校验
             if (CheckUtil.isLoginRational(jtUserName.getText(), jpPassword.getText(), strCode, jtCode.getText())) {
                 this.dispose();
-                new PlayJFrame().view();
+                new FunctionJFrame().view();
             }
         }
         if (e.getSource() == btRegister) {
