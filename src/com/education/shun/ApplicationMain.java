@@ -1,13 +1,14 @@
 package com.education.shun;
 
-import com.education.shun.view.MenuJFrame;
+import com.education.shun.view.FunctionJFrame;
 
 public class ApplicationMain {
 
     public static void main(String[] args) {
 
-        MenuJFrame parkingJf = new MenuJFrame();
-        parkingJf.view();
+//        MenuJFrame menuJFrame = new MenuJFrame();
+//        menuJFrame.view();
+        new FunctionJFrame().view();
 
     }
 }
