@@ -1,7 +1,7 @@
 package com.education.shun.view;
 
-import com.education.shun.Interface.CaseJFrameMole;
-import com.education.shun.view.parent.StartJFrame;
+import com.education.shun.Interface.WindowMole;
+import com.education.shun.view.parent.WindowJFramePublish;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,16 +15,21 @@ import java.awt.event.ActionListener;
  * @create: 2021-03-31 16:37
  **/
 
-public class MenuJFrame extends StartJFrame implements CaseJFrameMole,ActionListener {
+public class Menu extends WindowJFramePublish implements WindowMole,ActionListener {
 
     private JButton btLogin = new JButton("登录");
     private JButton btExplain = new JButton("说明");
     private JButton btQuit = new JButton("退出");
 
+    public Menu() {
+        name = "主界面窗口";
+        super.view();
+        this.view();
+    }
+
     @Override
     public void view() {
-
-        super.view();
+        super.bgImage();
 
         //登录按钮样式
         btLogin.setBounds(super.getX(), 100, 150,70);
@@ -61,13 +66,13 @@ public class MenuJFrame extends StartJFrame implements CaseJFrameMole,ActionList
         //登录事件
         if (e.getSource() == btLogin) {
             this.dispose();
-            new LoginJFrame().view();
+            new Login();
         }
         //说明事件
         if (e.getSource() == btExplain) {
             System.out.println("说明");
             this.dispose();
-            new FunctionJFrame().view();
+            new Function();
             /*this.dispose();
             new RegisterJFrame().view();*/
         }

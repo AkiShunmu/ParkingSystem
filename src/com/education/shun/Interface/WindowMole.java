@@ -7,8 +7,8 @@ package com.education.shun.Interface;
  * @create: 2021-04-10 18:29
  **/
 
-public interface CaseJFrameMole {
+public interface WindowMole {
 
-    public void view();
+    void view();
 
 }

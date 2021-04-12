@@ -1,10 +1,10 @@
 package com.education.shun.view;
 
-import com.education.shun.Interface.CaseJFrameMole;
+import com.education.shun.Interface.WindowMole;
 import com.education.shun.util.CaptchaCodeUtil;
 import com.education.shun.util.CheckUtil;
 import com.education.shun.util.ColourUtil;
-import com.education.shun.view.parent.StartJFrame;
+import com.education.shun.view.parent.WindowJFramePublish;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,7 +25,7 @@ import java.io.IOException;
  * @create: 2021-03-31 22:46
  **/
 
-public class RegisterJFrame extends StartJFrame implements CaseJFrameMole,ActionListener {
+public class Register extends WindowJFramePublish implements WindowMole,ActionListener {
 
     private JPanel jpRegister;
     private JLabel jlUserName,jlPassword,jlIsPassword,jlEmail,jlCodeText,jlCode;
@@ -38,10 +38,15 @@ public class RegisterJFrame extends StartJFrame implements CaseJFrameMole,Action
     private Icon icon;
     private String strCode;
 
+    public Register() {
+        name = "注册窗口";
+        super.view();
+        this.view();
+    }
+
     @Override
     public void view() {
-
-        super.view();
+        super.bgImage();
 
         //字体样式设置
         jpRegister = new ColourUtil("注册");
@@ -250,7 +255,7 @@ public class RegisterJFrame extends StartJFrame implements CaseJFrameMole,Action
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btReturn) {
             this.dispose();
-            new LoginJFrame().view();
+            new Login();
         }
         if (e.getSource() == btRegister) {
             //合法性校验
@@ -260,7 +265,7 @@ public class RegisterJFrame extends StartJFrame implements CaseJFrameMole,Action
                 //注册用户
                 if (CheckUtil.isRegisterSuccess(jtUserName.getText(), jpPassword.getText(), jtEmail.getText())) {
                     this.dispose();
-                    new MenuJFrame().view();
+                    new Menu();
                 }
             }
         }

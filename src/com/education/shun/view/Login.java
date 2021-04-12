@@ -1,12 +1,12 @@
 package com.education.shun.view;
 
-import com.education.shun.Interface.CaseJFrameMole;
+import com.education.shun.Interface.WindowMole;
 import com.education.shun.entity.User;
 import com.education.shun.util.CaptchaCodeUtil;
 import com.education.shun.util.CheckUtil;
 import com.education.shun.util.ColourUtil;
 import com.education.shun.util.SaveUserUtil;
-import com.education.shun.view.parent.StartJFrame;
+import com.education.shun.view.parent.WindowJFramePublish;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,7 +27,7 @@ import java.util.List;
  * @create: 2021-03-31 21:56
  **/
 
-public class LoginJFrame extends StartJFrame implements CaseJFrameMole,ActionListener {
+public class Login extends WindowJFramePublish implements WindowMole,ActionListener {
 
     private JPanel jpLogin;
     private JLabel jlUserName,jlPassword,jlCodeText,jlCode,jlRTips;
@@ -41,10 +41,15 @@ public class LoginJFrame extends StartJFrame implements CaseJFrameMole,ActionLis
     private Icon icon;
     private String strCode;
 
+    public Login() {
+        name = "登录窗口";
+        super.view();
+        this.view();
+    }
+
     @Override
     public void view() {
-
-        super.view();
+        super.bgImage();
 
         //字体样式设置
         jpLogin = new ColourUtil("登录");
@@ -226,12 +231,12 @@ public class LoginJFrame extends StartJFrame implements CaseJFrameMole,ActionLis
             //合法性校验
             if (CheckUtil.isLoginRational(jtUserName.getText(), jpPassword.getText(), strCode, jtCode.getText())) {
                 this.dispose();
-                new FunctionJFrame().view();
+                new Function();
             }
         }
         if (e.getSource() == btRegister) {
             this.dispose();
-            new RegisterJFrame().view();
+            new Register();
         }
         if (e.getSource() == btCode) {
             //刷新验证码
@@ -248,7 +253,7 @@ public class LoginJFrame extends StartJFrame implements CaseJFrameMole,ActionLis
         if (e.getSource() == btReturn) {
             offCheckBox();
             this.dispose();
-            new MenuJFrame().view();
+            new Menu();
         }
     }
 

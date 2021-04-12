@@ -1,11 +1,9 @@
 package com.education.shun.view;
 
-import com.education.shun.Interface.CaseJFrameMole;
+import com.education.shun.Interface.WindowMole;
 import com.education.shun.mold.LeadCar;
-import com.education.shun.mold.MyThread;
 import com.education.shun.mold.ParkingScene;
-import com.education.shun.util.ImageUtil;
-import com.education.shun.view.parent.PalyJFrame;
+import com.education.shun.view.parent.WindowJFramePublish;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +21,7 @@ import static java.lang.Thread.sleep;
  * @create: 2021-04-05 03:21
  **/
 
-public class FunctionJFrame extends PalyJFrame implements CaseJFrameMole, ActionListener, Runnable {
+public class Function extends WindowJFramePublish implements WindowMole, ActionListener, Runnable {
 
     //左上:-140, -580   小车:5, 170
     //左下:-140, -720   小车:5, 170
@@ -40,10 +38,14 @@ public class FunctionJFrame extends PalyJFrame implements CaseJFrameMole, Action
 
 //    private LodingUtil loding = new LodingUtil();
 
+    public Function() {
+        name = "运行窗口";
+        super.view();
+        this.view();
+    }
+
     @Override
     public void view() {
-
-        super.view();
 
         btReturn = new JButton("返回");
         btReturn.setBounds(super.getX()+400, super.getY()+400, 100, 50);
@@ -52,18 +54,11 @@ public class FunctionJFrame extends PalyJFrame implements CaseJFrameMole, Action
         //按钮点击事件
         btReturn.addActionListener(this);
 
-        super.addElement(btReturn);
-        super.upLayeredPane(btReturn);
+//        super.addElement(btReturn);
+//        super.upLayeredPane(btReturn);
 
 //        super.playGame();
-        //添加键盘监听器，处理键盘按下事件
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                leadCar.keyPressed(e);//委托给leadCar
-                parking.keyPressed(e);//委托给parking
-            }
-        });
+        addKeyListener(new KeyMonitor());
 
         new Thread(this).start();
     }
@@ -92,7 +87,18 @@ public class FunctionJFrame extends PalyJFrame implements CaseJFrameMole, Action
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btReturn) {
             this.dispose();
-            new MenuJFrame().view();
+            new Menu();
         }
     }
+
+    //添加键盘监听器，处理键盘按下事件
+    private class KeyMonitor extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            leadCar.keyPressed(e);//委托给leadCar
+            parking.keyPressed(e);//委托给parking
+        }
+    }
+
 }
+

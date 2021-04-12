@@ -1,5 +1,7 @@
 package com.education.shun.Interface;
 
+import com.education.shun.view.parent.WindowJFramePublish;
+
 /**
  * @program: ParkingSystem
  * @description: 窗体工厂
@@ -7,8 +9,8 @@ package com.education.shun.Interface;
  * @create: 2021-03-31 23:14
  **/
 
-public interface JFrameMold {
+public interface WindowFactoryMold {
 
-    public CaseJFrameMole publicView(CaseJFrameMole param);
+    WindowJFramePublish createWindow(String type);
 
 }
