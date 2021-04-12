@@ -2,6 +2,8 @@ package com.education.shun.view;
 
 import com.education.shun.Interface.CaseJFrameMole;
 import com.education.shun.mold.LeadCar;
+import com.education.shun.mold.MyThread;
+import com.education.shun.mold.ParkingScene;
 import com.education.shun.util.ImageUtil;
 import com.education.shun.view.parent.PalyJFrame;
 
@@ -23,46 +25,20 @@ import static java.lang.Thread.sleep;
 
 public class FunctionJFrame extends PalyJFrame implements CaseJFrameMole, ActionListener, Runnable {
 
-    private LeadCar leadCar = new LeadCar(100, 100);
+    //左上:-140, -580   小车:5, 170
+    //左下:-140, -720   小车:5, 170
+    //上1道:-510, -115    小车:440, 30
+    //上2道:-510, -115    小车:540, 30
+    //上3道:-510, -115    小车:690, 30
+    //上4道:-510, -115    小车:800, 30
+    //右上:-1300, -1320   小车:960, 230
+    //右下:-1300, -1320   小车:960, 335
+    private LeadCar leadCar = new LeadCar(5, 170);
+    private ParkingScene parking = new ParkingScene(-140, -580);
 
     private JButton btReturn;
 
 //    private LodingUtil loding = new LodingUtil();
-
-    public static void main(String[] args) {
-        new FunctionJFrame().test();
-    }
-
-    public void test() {
-        JFrame jFrame = new JFrame("小车测试");
-        jFrame.setSize(1080, 720);//设置窗体大小
-        jFrame.setBackground(Color.BLACK);//设置背景
-        jFrame.setLocationRelativeTo(null);//居中
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setVisible(true);
-
-//        JLabel jLabel = new JLabel();
-//        jLabel.setIcon((Icon) LeadCar.IMG_CAR);
-//        jFrame.add(jLabel);
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                leadCar.keyPressed(e);//委托给mysnake
-            }
-        });
-
-        new Thread(new FunctionJFrame()).start();
-    }
-
-    /**
-     * 绘制界面
-     */
-    @Override
-    public void paint(Graphics g) {
-        g.drawImage(ImageUtil.images.get("pk_bg"), 0, 0, null);
-        leadCar.draw(g);
-    }
 
     @Override
     public void view() {
@@ -79,44 +55,30 @@ public class FunctionJFrame extends PalyJFrame implements CaseJFrameMole, Action
         super.addElement(btReturn);
         super.upLayeredPane(btReturn);
 
+//        super.playGame();
         //添加键盘监听器，处理键盘按下事件
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 leadCar.keyPressed(e);//委托给leadCar
+                parking.keyPressed(e);//委托给parking
             }
         });
 
         new Thread(this).start();
-
     }
     /**
-     * 防止图片闪烁，使用双重缓存
-     *
-     * @param g
+     * 绘制界面
      */
-    /*Image backImg = null;
-
     @Override
-    public void update(Graphics g) {
-        if (backImg == null) {
-            backImg = createImage(Constant.GAME_WIDTH, Constant.GAME_HEIGHT);
-        }
-        Graphics backg = backImg.getGraphics();
-        Color c = backg.getColor();
-        backg.setColor(Color.BLACK);
-        backg.fillRect(0, 0, Constant.GAME_WIDTH, Constant.GAME_HEIGHT);
-        backg.setColor(c);
-        paint(backg);
-        g.drawImage(backImg, 0, 0, null);
-    }*/
+    public void paint(Graphics g) {
+        parking.draw(g);
+        leadCar.draw(g);
+    }
+
     @Override
     public void run() {
         while (true) {
-//            LodingUtil loding = new LodingUtil();
-//            loding.setLoding();
-//            super.addElement(loding);
-//            super.upLayeredPane(loding);
             repaint();
             try {
                 sleep(50);
@@ -133,5 +95,4 @@ public class FunctionJFrame extends PalyJFrame implements CaseJFrameMole, Action
             new MenuJFrame().view();
         }
     }
-
 }

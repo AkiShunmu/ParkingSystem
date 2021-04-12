@@ -15,6 +15,9 @@ public class ImageUtil {
 
     public static Map<String, Image> images = new HashMap<>();
 
+    public static final int WINDOW_WIDTH = 1080;
+    public static final int WINDOW_HEIGHT = 720;
+
     private static final String IMG_PRE = "src/image/";     //图片路径前缀
 
     static{

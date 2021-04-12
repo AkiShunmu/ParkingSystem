@@ -17,39 +17,29 @@ import java.util.List;
  * @create: 2021-04-10 21:15
  **/
 
-public class LeadCar extends CarObject implements CarMold {
+public class LeadCar extends ModelObject implements CarMold {
 
     //小车图片(未旋转)
     private static final BufferedImage IMG_CAR = (BufferedImage) ImageUtil.images.get("car04");
-/*    public static BufferedImage IMG_CAR;
 
-    static {
-        try {
-            IMG_CAR = ImageIO.read(new File("src/image/汽车07.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    private int speed;//移动速度
-    private int length;//长度
-    private int num;//
-    public static List<Point> bodyPoints = new LinkedList<>();
-    public int score = 0;//分数
+//    private int speed;//移动速度
+//    private int length;//长度
+//    private int num;//
+//    public static List<Point> bodyPoints = new LinkedList<>();
+//    public int score = 0;//分数
     private static BufferedImage newImgSnakeHead;//旋转后的蛇头图片
-    boolean up = true, down, left, right;//初始态向上
+    boolean up, down, left, right;//初始态向上
 
     public LeadCar(int x, int y) {
-        this.live = true;
         this.x = x;
         this.y = y;
+        this.speed = 5;
+        newImgSnakeHead = IMG_CAR;
 //        this.img = ImageUtil.images.get("snake_body");
 //        this.width = img.getWidth(null);
 //        this.height = img.getHeight(null);
-        this.speed = 5;
-        this.length = 1;
-        this.num = width / speed;
-        newImgSnakeHead = IMG_CAR;
+//        this.length = 1;
+//        this.num = width / speed;
     }
 
     /**
@@ -142,7 +132,7 @@ public class LeadCar extends CarObject implements CarMold {
     /**
      * 处理是否吃到到身体问题
      */
-    public void eatBody(){
+    /*public void eatBody(){
         for (Point point : bodyPoints) {
             for (Point point2 : bodyPoints) {
                 if(point.equals(point2)&&point!=point2){
@@ -150,16 +140,16 @@ public class LeadCar extends CarObject implements CarMold {
                 }
             }
         }
-    }
+    }*/
     /**
      * 绘制蛇身
      * @param g
      */
-    public void drawBody(Graphics g) {
+    /*public void drawBody(Graphics g) {
         int length = bodyPoints.size() - 1-num;//前num个存储的是蛇头的当前轨迹坐标
         for (int i = length; i >= num; i -= num) {//从尾部添加
             Point p = bodyPoints.get(i);
             g.drawImage(img, p.x, p.y, null);
         }
-    }
+    }*/
 }

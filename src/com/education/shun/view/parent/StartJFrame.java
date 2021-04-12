@@ -3,6 +3,7 @@ package com.education.shun.view.parent;
 import com.education.shun.Interface.CaseJFrameMole;
 import com.education.shun.Interface.JFrameMold;
 import com.education.shun.util.GameUtil;
+import com.education.shun.util.ImageUtil;
 import com.education.shun.view.LoginJFrame;
 import com.education.shun.view.MenuJFrame;
 import com.education.shun.view.RegisterJFrame;
@@ -28,17 +29,12 @@ public class StartJFrame extends JFrame implements JFrameMold {
     //创建背景面板。
     private GameUtil bgPanel;
     //创建图片对象
-    private ImageIcon image;
+    private Image image;
 
     private BufferedImage parkingIcon;
 
     public void view() {
-        try {
-            parkingIcon = ImageIO.read(new File("src/image/菜单图标.png"));
-        } catch (IOException e) {
-            System.out.println("图片获取失败...");
-            e.printStackTrace();
-        }
+        parkingIcon = (BufferedImage) ImageUtil.images.get("menu_icon");
 
         this.setTitle("停车场系统");
         this.setVisible(true);
@@ -51,10 +47,10 @@ public class StartJFrame extends JFrame implements JFrameMold {
         }
         //窗口布局设置
         this.setLayout(null);       //不采取任何布局
-        image = new ImageIcon("src/image/菜单背景.jpg");
+        image = ImageUtil.images.get("menu_bg");
         container = this.getContentPane();
-        bgPanel = new GameUtil(image.getImage());
-        bgPanel.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
+        bgPanel = new GameUtil(image);
+        bgPanel.setBounds(0, 0, ImageUtil.WINDOW_WIDTH, ImageUtil.WINDOW_HEIGHT);
         container.add(bgPanel);
     }
 

@@ -11,14 +11,14 @@ import java.awt.*;
  * @create: 2021-04-10 21:18
  **/
 
-public abstract class CarObject {
+public abstract class ModelObject {
 
     int x;//横坐标
     int y;//纵坐标
     Image img;//图片
     int width;//图片宽度
     int height;//图片高度
-    public boolean live;//死亡/存活
+    int speed;//移动速度
 
     public abstract void draw(Graphics g);
 
