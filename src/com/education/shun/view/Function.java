@@ -1,8 +1,8 @@
 package com.education.shun.view;
 
 import com.education.shun.Interface.WindowMole;
-import com.education.shun.mold.LeadCar;
-import com.education.shun.mold.ParkingScene;
+import com.education.shun.mold.*;
+import com.education.shun.util.ImageUtil;
 import com.education.shun.view.parent.WindowJFramePublish;
 
 import javax.swing.*;
@@ -23,16 +23,18 @@ import static java.lang.Thread.sleep;
 
 public class Function extends WindowJFramePublish implements WindowMole, ActionListener, Runnable {
 
-    //左上:-140, -580   小车:5, 170
-    //左下:-140, -720   小车:5, 170
+    ////左上:-140, -580   小车:5, 170
+    ////上3道:-510, -115    小车:690, 30
+    ////上4道:-510, -115    小车:800, 30
+    ////右下:-1300, -1320   小车:960, 335
+    //左下:-140, -580   小车:5, 320
     //上1道:-510, -115    小车:440, 30
-    //上2道:-510, -115    小车:540, 30
-    //上3道:-510, -115    小车:690, 30
-    //上4道:-510, -115    小车:800, 30
+    //上2道:-510, -115    小车:540, 30  该位置小车有些碰墙了
     //右上:-1300, -1320   小车:960, 230
-    //右下:-1300, -1320   小车:960, 335
-    private LeadCar leadCar = new LeadCar(5, 170);
-    private ParkingScene parking = new ParkingScene(-140, -580);
+    private LeadCar leadCar = new LeadCar(440, 30);
+    private ParkingScene parking = new ParkingScene(-510, -115);
+    private MinMaps minMaps = new MinMaps(800, 450);
+    private Wall wall = new Wall();
 
     private JButton btReturn;
 
@@ -41,6 +43,7 @@ public class Function extends WindowJFramePublish implements WindowMole, ActionL
     public Function() {
         name = "运行窗口";
         super.view();
+        super.ImageCaching();
         this.view();
     }
 
@@ -57,11 +60,10 @@ public class Function extends WindowJFramePublish implements WindowMole, ActionL
 //        super.addElement(btReturn);
 //        super.upLayeredPane(btReturn);
 
-//        super.playGame();
         addKeyListener(new KeyMonitor());
-
-        new Thread(this).start();
+//        new Thread(this).start();
     }
+
     /**
      * 绘制界面
      */
@@ -69,6 +71,8 @@ public class Function extends WindowJFramePublish implements WindowMole, ActionL
     public void paint(Graphics g) {
         parking.draw(g);
         leadCar.draw(g);
+        minMaps.draw(g);
+//        wall.draw(g);
     }
 
     @Override
@@ -98,6 +102,11 @@ public class Function extends WindowJFramePublish implements WindowMole, ActionL
             leadCar.keyPressed(e);//委托给leadCar
             parking.keyPressed(e);//委托给parking
         }
+        /*@Override
+        public void keyReleased(KeyEvent e) {
+            leadCar.keyReleased(e);//委托给leadCar
+            parking.keyReleased(e);//委托给parking
+        }*/
     }
 
 }

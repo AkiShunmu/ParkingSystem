@@ -13,8 +13,11 @@ import java.awt.*;
 
 public abstract class ModelObject {
 
+    String name;//模型名称
     int x;//横坐标
     int y;//纵坐标
+    boolean up, down, left, right;
+
     Image img;//图片
     int width;//图片宽度
     int height;//图片高度
@@ -29,5 +32,13 @@ public abstract class ModelObject {
      */
     public Rectangle getRectangle() {
         return new Rectangle(x, y, width, height);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

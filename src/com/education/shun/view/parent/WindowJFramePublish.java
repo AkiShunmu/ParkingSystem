@@ -23,9 +23,10 @@ public abstract class WindowJFramePublish extends JFrame {
 
         this.setTitle("停车场系统");
         this.setVisible(true);
-        this.setSize(1080,720);
+        this.setSize(ImageUtil.WINDOW_WIDTH,ImageUtil.WINDOW_HEIGHT);
         this.setResizable(false);     //设置窗口是否可调整
         this.setLocationRelativeTo(null);  //设置窗口在屏幕上居中
+        this.setBackground(Color.BLACK);//设置背景
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);       //不采取任何布局
 
@@ -57,6 +58,52 @@ public abstract class WindowJFramePublish extends JFrame {
     public void upLayeredPane(Component... param) {
         for (Component component : param) {
             this.getLayeredPane().add(component, Integer.MAX_VALUE);
+        }
+    }
+
+    //图像双重缓存线程
+    public void ImageCaching() {
+        new MyThread().start();
+    }
+
+    public void repaint() {
+        super.repaint();
+        update(getGraphics());
+    }
+
+    /**
+     * 防止图片闪烁，使用双重缓存
+     *
+     * @param g
+     */
+    Image backImg = null;
+
+    @Override
+    public void update(Graphics g) {
+        if (backImg == null) {
+            backImg = createImage(ImageUtil.WINDOW_WIDTH, ImageUtil.WINDOW_HEIGHT);
+        }
+        Graphics backg = backImg.getGraphics();
+        Color c = backg.getColor();
+        backg.setColor(Color.BLACK);
+        backg.fillRect(0, 0, ImageUtil.WINDOW_WIDTH, ImageUtil.WINDOW_HEIGHT);
+        backg.setColor(c);
+        paint(backg);
+        g.drawImage(backImg, 0, 0, null);
+    }
+
+    //这里创建一个不断重绘的线程内部类
+    class MyThread extends Thread{
+        @Override
+        public void run() {
+            while(true){
+                repaint();
+                try {
+                    sleep(50);//每50毫秒重绘一次
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

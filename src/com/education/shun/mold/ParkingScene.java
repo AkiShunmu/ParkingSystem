@@ -2,9 +2,11 @@ package com.education.shun.mold;
 
 import com.education.shun.util.GameUtil;
 import com.education.shun.util.ImageUtil;
+import com.education.shun.util.NameUtil;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 /**
@@ -18,9 +20,11 @@ public class ParkingScene extends ModelObject {
 
     private static final BufferedImage IMG_PARKING = (BufferedImage) ImageUtil.images.get("pk_bg");
 //    private static BufferedImage newImgParking;//移动后的背景图片
-    boolean up, down, left, right;//初始态向上
+    public static int parkingX;
+    public static int parkingY;
 
     public ParkingScene(int x, int y) {
+        name = NameUtil.MOLD_PARKING_SCENE;
         this.x = x;
         this.y = y;
         this.speed = 10;
@@ -33,13 +37,13 @@ public class ParkingScene extends ModelObject {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_SPACE:     //设置“空格”倒车
-                if (up && y > -1200) {
+                if (up && y > -1200 && Wall.isTouch) {
                     y -= speed;
-                } else if (down && y < -100) {
+                } else if (down && y < -100 && Wall.isTouch) {
                     y += speed;
-                } else if (left && x > -1290) {
+                } else if (left && x > -1290 && Wall.isTouch) {
                     x -= speed;
-                } else if (right && x < -150) {
+                } else if (right && x < -150 && Wall.isTouch) {
                     x += speed;
                 }
                 break;
@@ -49,7 +53,7 @@ public class ParkingScene extends ModelObject {
                     down = false;
                     left = false;
                     right = false;
-                    y += speed;
+                    if (Wall.isTouch) y += speed;
                 }
                 break;
             case KeyEvent.VK_DOWN:
@@ -58,7 +62,7 @@ public class ParkingScene extends ModelObject {
                     down = true;
                     left = false;
                     right = false;
-                    y -= speed;
+                    if (Wall.isTouch) y -= speed;
                 }
                 break;
             case KeyEvent.VK_LEFT:
@@ -67,7 +71,7 @@ public class ParkingScene extends ModelObject {
                     down = false;
                     left = true;
                     right = false;
-                    x += speed;
+                    if (Wall.isTouch) x += speed;
                 }
                 break;
             case KeyEvent.VK_RIGHT:
@@ -76,14 +80,28 @@ public class ParkingScene extends ModelObject {
                     down = false;
                     left = false;
                     right = true;
-                    x -= speed;
+                    if (Wall.isTouch) x -= speed;
                 }
                 break;
         }
     }
 
+    /**
+     * 接收键盘抬起事件
+     * @param e
+     */
+    /*public void keyReleased(KeyEvent e) {
+        if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP
+                || e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_LEFT
+                || e.getKeyCode() == KeyEvent.VK_RIGHT) && !Wall.isTouch) {
+            Wall.isTouch = true;
+        }
+    }*/
+
     @Override
     public void draw(Graphics g) {
+        parkingX = x;
+        parkingY = y;
         g.drawImage(IMG_PARKING, x, y, null);
     }
 }
