@@ -27,7 +27,9 @@ public class ParkingScene extends ModelObject {
         name = NameUtil.MOLD_PARKING_SCENE;
         this.x = x;
         this.y = y;
-        this.speed = 10;
+//        parkingX = x;
+//        parkingY = y;
+        this.speed = 15;
     }
 
     /**
@@ -88,7 +90,7 @@ public class ParkingScene extends ModelObject {
 
     /**
      * 接收键盘抬起事件
-     * @param e
+     * @param
      */
     /*public void keyReleased(KeyEvent e) {
         if ((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP

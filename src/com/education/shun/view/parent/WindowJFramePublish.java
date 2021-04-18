@@ -66,6 +66,7 @@ public abstract class WindowJFramePublish extends JFrame {
         new MyThread().start();
     }
 
+    //重写repaint方法，调用update
     public void repaint() {
         super.repaint();
         update(getGraphics());

@@ -1,9 +1,11 @@
 package com.education.shun.util;
 
+import com.education.shun.view.Function;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -15,12 +17,15 @@ import java.util.Scanner;
 
 public class AlgorithmUtil {
 
-    public static void main(String[] args) {
-        int[] park = {6,7,8,9,0,11,12,13,14,0,16,17,0,0,0,0,0,0,0,0,0,0};
-        new AlgorithmUtil().inGreedy(1, park);
-    }
+    private static Random random = new Random();
 
-    public int inGreedy(int isInto, int[] park) {
+    /**
+     * 输出距离出生点最近的车位
+     * @param isInto    出生点
+     * @param park  随机车位数组
+     * @return  最近车位
+     */
+    public static int inGreedy(int isInto, int[] park) {
         int dot = 27;       //点数
 //        edge = 26;      //边数
 //        start = 1;    //开始点数
@@ -39,6 +44,7 @@ public class AlgorithmUtil {
                 value[i][j] = -1;
             }
         }
+        //判断随机生成的小车位置
         if (isInto == 1) {
             value[1][2] = 400;
             value[2][1] = 400;
@@ -52,6 +58,7 @@ public class AlgorithmUtil {
             value[4][1] = 300;
             dis[4] = 300;
         }
+        //添加各点权重
         value[2][3] = 400;
         value[3][2] = 400;
         value[3][4] = 1800;
@@ -64,7 +71,6 @@ public class AlgorithmUtil {
         value[5][2] = 2800;
         value[3][5] = 2400;
         value[5][3] = 2400;
-
         b = 6;
         length = 300;
         for (int i = 0; i < 12; i++) {
@@ -105,7 +111,7 @@ public class AlgorithmUtil {
         int lately = 0;     //最近距离的车位
         int minNum = Integer.MAX_VALUE;
         int[] searchArr = search(1, dis, value, dot);
-        List<Integer> nullPark = new ArrayList<>();
+        List<Integer> nullPark = new ArrayList<>(); //创建集合存放空闲车位
         //找出全部空车位的序号
         for (int i = 6; i < 28; i++) {
             if (park[i-6] == 0) {
@@ -119,10 +125,34 @@ public class AlgorithmUtil {
                 lately = nullPark.get(i);
             }
         }
-        System.out.println("lately = " + lately);
+//        System.out.println("lately = " + lately);
         return lately;
     }
 
+    /**
+     * 生成随机车位数组
+     * @return  随机数组
+     */
+    public static int[] randomArr() {
+        int[] arr = new int[22];
+        int ran;
+        for (int i = 0, j = 6; i < arr.length; i++, j++) {
+            ran = random.nextInt(2);
+            if (ran == 1) {
+                arr[i] = j;
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * 核心算法
+     * @param x         起始点
+     * @param dis       贪心路径存储
+     * @param value     路径权位
+     * @param n         点的个数
+     * @return
+     */
     private static int[] search(int x, int dis[], int value[][], int n) {
         boolean mark[] = new boolean[n+1];
         for (int i = 1; i <= n; i++) {

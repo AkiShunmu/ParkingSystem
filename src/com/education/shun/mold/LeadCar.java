@@ -4,7 +4,9 @@ import com.education.shun.Interface.CarMold;
 import com.education.shun.util.GameUtil;
 import com.education.shun.util.ImageUtil;
 import com.education.shun.util.NameUtil;
+import com.education.shun.view.parent.WindowJFramePublish;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,19 +21,13 @@ import java.util.List;
  * @create: 2021-04-10 21:15
  **/
 
-public class LeadCar extends ModelObject implements CarMold {
+public class LeadCar extends ModelObject {
 
     //小车图片(未旋转)
     private static final BufferedImage IMG_CAR = (BufferedImage) ImageUtil.images.get("car04");
 
-//    private int speed;//移动速度
-//    private int length;//长度
-//    private int num;//
-//    public static List<Point> bodyPoints = new LinkedList<>();
-//    public int score = 0;//分数
-//    public static
-    private static int carX;
-    private static int carY;
+    public static int carX;
+    public static int carY;
     public static Rectangle reCar;
     private static int carWidth;
     private static int carHeight;
@@ -41,7 +37,7 @@ public class LeadCar extends ModelObject implements CarMold {
         name = NameUtil.MOLD_LEAD_CAR;
         this.x = x;
         this.y = y;
-        this.speed = 5;
+        this.speed = 8;
         this.width = IMG_CAR.getWidth();
         this.height = IMG_CAR.getHeight();
         carWidth = IMG_CAR.getWidth();
@@ -79,6 +75,8 @@ public class LeadCar extends ModelObject implements CarMold {
                     right = false;
                     newImgSnakeHead = IMG_CAR;//旋转图片
                     if (Wall.isTouch) y -= speed;
+//                    System.out.println("x = " + x);
+//                    System.out.println("y = " + y);
                 }
                 break;
             case KeyEvent.VK_DOWN:
@@ -89,6 +87,8 @@ public class LeadCar extends ModelObject implements CarMold {
                     right = false;
                     newImgSnakeHead = (BufferedImage) GameUtil.rotateImage(IMG_CAR, -180);
                     if (Wall.isTouch) y += speed;
+//                    System.out.println("x = " + x);
+//                    System.out.println("y = " + y);
                 }
                 break;
             case KeyEvent.VK_LEFT:
@@ -99,6 +99,8 @@ public class LeadCar extends ModelObject implements CarMold {
                     right = false;
                     newImgSnakeHead = (BufferedImage) GameUtil.rotateImage(IMG_CAR, -90);
                     if (Wall.isTouch) x -= speed;
+//                    System.out.println("x = " + x);
+//                    System.out.println("y = " + y);
                 }
                 break;
             case KeyEvent.VK_RIGHT:
@@ -109,6 +111,8 @@ public class LeadCar extends ModelObject implements CarMold {
                     right = true;
                     newImgSnakeHead = (BufferedImage) GameUtil.rotateImage(IMG_CAR, 90);
                     if (Wall.isTouch) x += speed;
+//                    System.out.println("x = " + x);
+//                    System.out.println("y = " + y);
                 }
                 break;
         }
@@ -125,35 +129,16 @@ public class LeadCar extends ModelObject implements CarMold {
             Wall.isTouch = true;
         }
     }*/
-    /**
-     * 移动
-     */
-    @Override
-    public void move() {
-        if (up)
-            y -= speed;
-        else if (down)
-            y += speed;
-        else if (left)
-            x -= speed;
-        else if (right)
-            x += speed;
-    }
+
     /**
      * 绘制
      */
     public void draw(Graphics g) {
+        carX = x;
+        carY = y;
         g.drawImage(newImgSnakeHead, x, y, null);//绘制蛇头
-        reCar = new Rectangle(carX, carY, carWidth, carHeight);
-//        outOfBounds();//处理出界问题
-//        eatBody();//处理是否吃到身体问题
-//        bodyPoints.add(new Point(x, y));//保存轨迹
-//        if (bodyPoints.size() == (this.length+1) * num) {//当保存的轨迹点的个数为蛇的长度+1的num倍时
-//            bodyPoints.remove(0);//移除第一个
-//        }
-//        drawBody(g);//绘制蛇身
-//        move();//移动
     }
+
     /**
      * 处理是否碰撞问题
      */
@@ -166,15 +151,14 @@ public class LeadCar extends ModelObject implements CarMold {
 //        System.out.println(newImgSnakeHead.getSource());  //返回图像的像素对象
         return true;
     }
+
     /**
-     * 绘制蛇身
-     * @param g
+     * 判断小车是否停靠
      */
-    /*public void drawBody(Graphics g) {
-        int length = bodyPoints.size() - 1-num;//前num个存储的是蛇头的当前轨迹坐标
-        for (int i = length; i >= num; i -= num) {//从尾部添加
-            Point p = bodyPoints.get(i);
-            g.drawImage(img, p.x, p.y, null);
+    public void isPark() {
+        if (carX >= 210 && carX <= 195 && carY >= 650 && carY <= 630) {
+            System.out.println("停靠6号位");
         }
-    }*/
+    }
+
 }
