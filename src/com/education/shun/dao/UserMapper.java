@@ -25,9 +25,6 @@ public class UserMapper {
 
     //查找用户
     public User userFind(String userName) {
-        /*Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;*/
 
         try {
             connection = DBUtil.getConnection();
@@ -52,9 +49,7 @@ public class UserMapper {
 
     //查找所有用户
     public List<User> userFindAll() {
-        /*Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;*/
+
         List<User> list = new ArrayList<>();
 
         try {
@@ -80,8 +75,6 @@ public class UserMapper {
 
     //添加用户
     public boolean userInsert(String id, String userName, String userPassword, String email, Integer saveUser) {
-        /*Connection connection = null;
-        PreparedStatement statement = null;*/
 
         try {
             connection = DBUtil.getConnection();
